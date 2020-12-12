@@ -5,8 +5,15 @@
     <title>Chat App</title>
 </head>
 <body>
-<h4>Welcome to the chat application</h4>
+<h4>Chat application</h4>
 
+<form id="chat-form">
+    <input name="message" placeholder="Message">
+    <button>Send</button>
+</form>
+<button id="send-location">Send location</button>
+
+<!--<button id="increment">+1</button>-->
 <!--klient siden af socket.io hentes med nedenstående socket.io script-->
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/chat.js"></script>
