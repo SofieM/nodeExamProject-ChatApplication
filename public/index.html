@@ -7,13 +7,32 @@
 <body>
 <h4>Chat application</h4>
 
+<div id="messages"></div>
+
 <form id="chat-form">
     <input name="message" placeholder="Message">
     <button>Send</button>
 </form>
 <button id="send-location">Send location</button>
 
-<!--<button id="increment">+1</button>-->
+
+<script id="message-template" type="text/html">
+    <div>
+            <p>{{createdAt}} - {{message}}</p>
+    </div>
+</script>
+
+<script id="location-message-template" type="text/html">
+    <div>
+        <p>{{createdAt}} - <a href="{{url}}" target="_blank">My current location</a></p>
+    </div>
+</script>
+
+<!--mustache library til html template-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+<!--moments library til at formattere min UTF tid-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
 <!--klient siden af socket.io hentes med nedenstående socket.io script-->
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/chat.js"></script>

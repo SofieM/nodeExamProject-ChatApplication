@@ -1,6 +1,8 @@
 const express = require('express');
 const socketio = require('socket.io');
 const http = require('http');
+const { generateMessage, generateLocationMessage  } = require('./utils/messages');
+
 
 const app = express();
 const server = http.createServer(app);
@@ -16,26 +18,27 @@ io.on('connection', (socket) => {
     //socket.emit sender event til en specifik klient (til klientens socket)
     //sender et event = det selvlavede: message og en værdi (en velkomst-string),
     //Værdien kan bruges som det førte argument til callback funktionen hos klienten
-    socket.emit('message', 'Welcome!');
+    socket.emit('message', generateMessage('Welcome!'));
 
     //broadcast sender en besked til alle andre end den socket, det udgår fra
-    socket.broadcast.emit('message', 'A new user has joined');
+    socket.broadcast.emit('message', generateMessage('A new user has joined!'));
 
     //modtager eventet sendMessage fra klienten
     socket.on('sendMessage', (message, callback) => {
         //io.emit sender event til alle klienter, der er forbundet til serveren
-        io.emit('message', message);
+        io.emit('message', generateMessage(message));
         //Aknowledgement: den der modtager et event (socket.on), modtager en callback-funktion,
         //som skal kaldes for at "aknowledge" overfor klienten
         callback('Delivered!');
     });
 
-    socket.on('sendLocation', (coords) => {
-        io.emit('message', `https://google.com/maps?q=${coords.latitude},${coords.longitude}`)
+    socket.on('sendLocation', (coords, callback) => {
+        io.emit('locationMessage', generateLocationMessage(`https://google.com/maps?q=${coords.latitude},${coords.longitude}`));
+        callback();
     });
     
     socket.on('disconnect', () =>{
-        io.emit('message', 'A user has left!')
+        io.emit('message', generateMessage('A user has left!'))
     });
 });
 
