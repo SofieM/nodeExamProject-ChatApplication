@@ -1,4 +1,4 @@
-//brugen af socket.io på klientsiden (scriptet kaldes i index.html) giver adgang til funktionen io
+//brugen af socket.io på klientsiden (scriptet kaldes i chat.html) giver adgang til funktionen io
 const socket = io();
 
 //Elements

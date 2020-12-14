@@ -1,9 +1,9 @@
+require('dotenv').config();
+
 const express = require('express');
 const socketio = require('socket.io');
 const http = require('http');
 const { generateMessage, generateLocationMessage  } = require('./utils/messages');
-
-
 const app = express();
 const server = http.createServer(app);
 //Socket.io skal kaldes med en http-serveren (derfor loades http direkte ind med require - og serveren laves ovenfor)
@@ -11,7 +11,27 @@ const server = http.createServer(app);
 // er der behov for at have en "ren" http-instans til socketio
 const io = socketio(server);
 
+const login = require('./routes/login');
+const users = require('./routes/users');
+
 app.use(express.static('public'));
+
+const session = require('express-session');
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true
+}));
+
+app.use('/login', login);
+app.use('/users', users);
+
+app.get('/', (req, res) =>{
+    res.redirect('./login');
+});
+
+const chat = require('./routes/chat');
+app.use('/chat', chat);
 
 io.on('connection', (socket) => {
     console.log('New Websocket connection');
