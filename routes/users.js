@@ -8,12 +8,11 @@ router.use(express.urlencoded({ extended: true }));
 const bcrypt = require("bcrypt");
 const saltRounds = 12;
 
-const fs = require('fs');
-
-const users = fs.readFileSync(__dirname + '/../public/html/users.html').toString();
-
 router.get('/', (req, res) => {
-    return res.send(users)
+    //BLIVER IMPLEMENTERET INDEN EKSAMEN
+    //skal returnere alle users (når fetch er implementeret på klient-siden)
+    //Users skal hentes fra databasen - returneres som json til klienten (som fetcher) - vises på chat-siden
+    return res.send([{name:'Sofie', email: 'sofie@email.com'}]);
 });
 
 router.post('/', async (req, res) => {
@@ -32,7 +31,7 @@ router.post('/', async (req, res) => {
     database.query("INSERT INTO users SET ?", user, (error, results, fields) =>{
         if (error) {
             res.send('Error', error);
-            res.redirect('/');
+            res.redirect('../register');
         } else {
             res.redirect('../login');
         }

@@ -50,7 +50,7 @@ $chatForm.addEventListener('submit', (e) =>{
         console.log('The message was delivered!');
     });
 });
-//kan dette laves med fetch??
+
 //sender klientens geolocation, hvis klienten trykker på knappen 'send location'
 $sendLocationButton.addEventListener('click', () => {
     //hvis klientens browser ikke understøtter geolocation
@@ -71,3 +71,32 @@ $sendLocationButton.addEventListener('click', () => {
        });
    });
 });
+
+//FETCH - IMPLEMENTERES MED RIGTIG DATA INDEN EKSAMEN
+async function getUsers() {
+    let url = '/users';
+    try {
+        let res = await fetch(url);
+        return await res.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function renderUsers() {
+    let users = await getUsers();
+    console.log(users);
+    let html = '';
+    users.forEach(user => {
+        let htmlSegment = `<div class="user">
+                            <h2>${user.name}</h2>
+                            <div class="email"><a href="email:${user.email}">${user.email}</a></div>
+                        </div>`;
+
+        html += htmlSegment;
+    });
+
+    let container = document.querySelector('.container');
+    container.innerHTML = html;
+}
+

@@ -13,6 +13,7 @@ const io = socketio(server);
 
 const login = require('./routes/login');
 const users = require('./routes/users');
+const register = require('./routes/register');
 
 app.use(express.static('public'));
 
@@ -25,6 +26,7 @@ app.use(session({
 
 app.use('/login', login);
 app.use('/users', users);
+app.use('/register', register);
 
 app.get('/', (req, res) =>{
     res.redirect('./login');
