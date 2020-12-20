@@ -39,6 +39,4 @@ router.post('/', async (req, res) => {
     });
 });
 
-//PUT/PATCH metode ('/user/:id', hvis man skal kunne opdatere en bruger
-
 module.exports = router;
