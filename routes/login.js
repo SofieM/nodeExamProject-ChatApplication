@@ -9,7 +9,7 @@ router.use(express.urlencoded({ extended: true }));
 
 const bcrypt = require("bcrypt");
 
-const login = fs.readFileSync(__dirname + '/../public/login.html').toString();
+const login = fs.readFileSync(__dirname + '/../public/html/login.html').toString();
 
 router.get('/', (req, res) => {
     return res.send(login);

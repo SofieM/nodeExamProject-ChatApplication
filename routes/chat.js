@@ -6,7 +6,7 @@ const fs = require('fs');
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-const chat = fs.readFileSync(__dirname + '/../public/chat.html').toString();
+const chat = fs.readFileSync(__dirname + '/../public/html/chat.html').toString();
 
 router.get('/', (req, res) => {
     if (req.session.loggedin) {

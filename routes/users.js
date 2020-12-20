@@ -10,7 +10,7 @@ const saltRounds = 12;
 
 const fs = require('fs');
 
-const users = fs.readFileSync(__dirname + '/../public/users.html').toString();
+const users = fs.readFileSync(__dirname + '/../public/html/users.html').toString();
 
 router.get('/', (req, res) => {
     return res.send(users)
