@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
                 if(match){
                     req.session.loggedin = true;
                     req.session.username = username;
-                    res.redirect('./chat');
+                    res.redirect('../chat');
                 }
                 else{
                     res.send({
