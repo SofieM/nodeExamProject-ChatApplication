@@ -1,0 +1,47 @@
+body{
+    font-family: Tahoma, Geneva, sans-serif;
+}
+/*#messages{
+    height: 90%;
+    box-sizing: border-box;
+}*/
+#chat-container, #chat-container{
+    float: left;
+    width: 70%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+#send-location{
+    float: right;
+}
+
+#chat-form{
+    float: right;
+}
+
+#users-container{
+    float: right;
+    width: 30%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.user{
+    border: 3px dotted #ccc;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+button{
+    margin: 10px;
+}
+
+.message-name{
+    color: #535b63;
+    font-size: small;
+    font-weight: bold;
+}
+
+.message-meta{
+    font-size: x-small;
+}

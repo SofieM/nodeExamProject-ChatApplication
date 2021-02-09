@@ -1,6 +1,9 @@
 //brugen af socket.io på klientsiden (scriptet kaldes i chat.html) giver adgang til funktionen io
 const socket = io();
 
+const urlParams = new URLSearchParams(window.location.search);
+const usernameParam = urlParams.get('username');
+
 //Elements
 const $chatForm = document.querySelector('#chat-form');
 const $chatFormInput = $chatForm.querySelector('input');
@@ -13,19 +16,21 @@ const messageTemplate = document.querySelector('#message-template').innerHTML;
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML;
 
 //modtager event fra serveren 'message'
-socket.on('message', (message) => {
+socket.on('message', (name, message) => {
     console.log(message);
     //De beskeder, der sendes mellem server i klient indsættes i min html template vha. mustache
     const html = Mustache.render(messageTemplate, {
+        name: name,
         message: message.text,
         createdAt: moment(message.createdAt).format('H:mm')
     });
     $messages.insertAdjacentHTML('beforeend', html);
 });
 
-socket.on('locationMessage', (message) => {
+socket.on('locationMessage', (name, message) => {
    console.log(message.url);
     const html = Mustache.render(locationMessageTemplate, {
+        name: name,
         url: message.url,
         createdAt: moment(message.createdAt).format('H:mm')
     });
@@ -40,7 +45,7 @@ $chatForm.addEventListener('submit', (e) =>{
     
     //Sender eventet "sendmessage" til serveren
     //Acknowledgement: den der emitter et event, sætter en callback funktion op
-    socket.emit('sendMessage', message, () => {
+    socket.emit('sendMessage', usernameParam, message, () => {
         //enable - når serveren svarer, at beskeden er modtaget, så kan knappen benyttes igen
         $chatFormButton.removeAttribute('disabled');
         //det klienten har skrevet i input-feltet slettes, når beskeden er sendt
@@ -61,18 +66,18 @@ $sendLocationButton.addEventListener('click', () => {
     $sendLocationButton.setAttribute('disabled', 'disabled');
    
    navigator.geolocation.getCurrentPosition((position) => {
-       socket.emit('sendLocation', {
+       socket.emit('sendLocation',usernameParam, {
            latitude: position.coords.latitude,
            longitude: position.coords.longitude
        }, () => {
-           console.log('Location shared!')
+           console.log('Location shared!');
            //enable
            $sendLocationButton.removeAttribute('disabled');
        });
    });
 });
 
-//FETCH - IMPLEMENTERES MED RIGTIG DATA INDEN EKSAMEN
+
 async function getUsers() {
     let url = '/users';
     try {
@@ -89,9 +94,9 @@ async function renderUsers() {
     let html = '';
     users.forEach(user => {
         let htmlSegment = `<div class="user">
-                            <h2>${user.name}</h2>
+                            <h3>${user.username}</h3>
                             <div class="email"><a href="email:${user.email}">${user.email}</a></div>
-                        </div>`;
+                            </div>`;
 
         html += htmlSegment;
     });

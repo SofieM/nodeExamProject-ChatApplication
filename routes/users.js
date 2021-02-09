@@ -12,7 +12,15 @@ router.get('/', (req, res) => {
     //BLIVER IMPLEMENTERET INDEN EKSAMEN
     //skal returnere alle users (når fetch er implementeret på klient-siden)
     //Users skal hentes fra databasen - returneres som json til klienten (som fetcher) - vises på chat-siden
-    return res.send([{name:'Sofie', email: 'sofie@email.com'}]);
+    database.query("SELECT username, email from users", (error, result, fields) => {
+        if (error) {
+            res.send('Error', error);
+            res.redirect('../');
+        } else {
+            return res.send(JSON.stringify(result));
+        }
+    });
+    //return res.send([{name:'Sofie', email: 'sofie@email.com'}]);
 });
 
 router.post('/', async (req, res) => {

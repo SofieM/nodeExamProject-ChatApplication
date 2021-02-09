@@ -2,32 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/chat.css">
     <title>Chat App</title>
 </head>
 <body>
-<h4>Chat application</h4>
+<div id="chat-container">
+    <h3>Chat</h3>
+    <div id="messages">
 
-<div id="messages"></div>
+    </div>
 
-<form id="chat-form">
-    <input name="message" placeholder="Message">
-    <button>Send</button>
-</form>
-<button id="send-location">Send location</button>
+    <form id="chat-form">
+        <input id="chat-input" name="message" placeholder="Message">
+        <button id="send-button">Send</button>
+    </form>
+    <button id="send-location">Send location</button>
+</div>
 
 <!--Skal bruges til at vise en liste over brugere, når der sendes fetch til /users -->
-<div class="container"></div>
-<button id="fetch-users" onclick="renderUsers()">Show Users</button>
+<div id="users-container">
+    <h3>All registered users</h3>
+    <div class="container"></div>
+    <button id="fetch-users" onclick="renderUsers()">Show All Registered users</button>
+</div>
 
 <script id="message-template" type="text/html">
     <div>
-            <p>{{createdAt}} - {{message}}</p>
+        <p>
+            <span class="message-name">{{name}}:</span>
+            <span class="message">{{message}}</span>
+            <span class="message-meta">{{createdAt}}</span>
+        </p>
     </div>
 </script>
 
 <script id="location-message-template" type="text/html">
     <div>
-        <p>{{createdAt}} - <a href="{{url}}" target="_blank">My current location</a></p>
+        <p>
+            <span class="message-name">{{name}}:</span>
+            <span class="message"><a href="{{url}}" target="_blank">My current location</a></span>
+            <span class="message-meta">{{createdAt}}</span>
+        </p>
+
     </div>
 </script>
 

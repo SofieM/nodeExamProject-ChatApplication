@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    let username = req.body.login_username
+    let username = req.body.login_username;
     let password = req.body.login_password;
     database.query('SELECT * FROM users WHERE username = ?',[username],  (error, results, fields) => {
         if (error) {
@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
                 if(match){
                     req.session.loggedin = true;
                     req.session.username = username;
-                    res.redirect('../chat');
+                    res.redirect('../chat/?username=' + username);
                 }
                 else{
                     res.send({
