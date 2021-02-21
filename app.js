@@ -7,9 +7,9 @@ const { generateMessage, generateLocationMessage  } = require('./utils/messages'
 const app = express();
 
 const server = http.createServer(app);
-//Socket.io skal kaldes med en http-serveren (derfor loades http direkte ind med require - og serveren laves ovenfor)
+//Socket.io skal kaldes med en http-server (derfor loades http direkte ind med require - og serveren laves ovenfor)
 //Selv om node bruger den "bagom" lige meget hvad (express bygger på http),
-// er der behov for at have en "ren" http-instans til socketio
+//er der behov for at have en "ren" http-instans til socketio
 const io = socketio(server);
 
 const login = require('./routes/login');

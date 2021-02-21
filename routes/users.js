@@ -8,10 +8,8 @@ router.use(express.urlencoded({ extended: true }));
 const bcrypt = require("bcrypt");
 const saltRounds = 12;
 
+//returnerer alle users fra db
 router.get('/', (req, res) => {
-    //BLIVER IMPLEMENTERET INDEN EKSAMEN
-    //skal returnere alle users (når fetch er implementeret på klient-siden)
-    //Users skal hentes fra databasen - returneres som json til klienten (som fetcher) - vises på chat-siden
     database.query("SELECT username, email from users", (error, result, fields) => {
         if (error) {
             res.send('Error', error);
@@ -20,9 +18,9 @@ router.get('/', (req, res) => {
             return res.send(JSON.stringify(result));
         }
     });
-    //return res.send([{name:'Sofie', email: 'sofie@email.com'}]);
 });
 
+//opretter ny user i db
 router.post('/', async (req, res) => {
     const signup_username = req.body.signup_username;
     const signup_email = req.body.signup_email;

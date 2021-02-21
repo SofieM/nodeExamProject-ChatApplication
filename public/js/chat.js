@@ -1,6 +1,6 @@
-//brugen af socket.io på klientsiden (scriptet kaldes i chat.html) giver adgang til funktionen io
 const socket = io();
 
+//window.location.search returnerer den querystring der indgår i URL'en
 const urlParams = new URLSearchParams(window.location.search);
 const usernameParam = urlParams.get('username');
 
@@ -18,7 +18,7 @@ const locationMessageTemplate = document.querySelector('#location-message-templa
 //modtager event fra serveren 'message'
 socket.on('message', (name, message) => {
     console.log(message);
-    //De beskeder, der sendes mellem server i klient indsættes i min html template vha. mustache
+    //De beskeder, der sendes mellem server og klient indsættes i min html template vha. mustache
     const html = Mustache.render(messageTemplate, {
         name: name,
         message: message.text,
@@ -39,7 +39,7 @@ socket.on('locationMessage', (name, message) => {
 
 $chatForm.addEventListener('submit', (e) =>{
     e.preventDefault();
-    //disable, så klienten ikke kan trykke på send knappen, før eventet er aknowledged
+    //disable, så klienten ikke kan trykke på send knappen, før eventet er acknowledged
     $chatFormButton.setAttribute('disabled', 'disabled');
     const message = e.target.elements.message.value;
     
@@ -90,7 +90,6 @@ async function getUsers() {
 
 async function renderUsers() {
     let users = await getUsers();
-    console.log(users);
     let html = '';
     users.forEach(user => {
         let htmlSegment = `<div class="user">
